@@ -15,7 +15,8 @@ public class Cube
 	 * Initialize and Define Variables 
 	 */
 	public  Color[][][] myFaces = new Color[6][3][3];;
-	private final Color[] COLORS = {Color.GREEN, Color.WHITE, Color.YELLOW, Color.ORANGE, Color.RED, Color.BLUE};
+	public final Color[] COLORS = {Color.GREEN, Color.WHITE, Color.ORANGE, Color.YELLOW, Color.RED, Color.BLUE};
+	private final int[] COLOR_INDEX = {0, 1, 2, 3, 4, 5};
 	private final int CUBE_SIZE = 3;
 	
 	/**
@@ -33,6 +34,31 @@ public class Cube
 	public Color getColor(int i, int j, int k)
 	{
 		return myFaces[i][j][k];
+	}
+	
+	
+	public int getColorInt(Color color) 
+	{
+		if (color.equals(Color.GREEN)) 
+		{
+			return 0;
+		} else if (color.equals(Color.WHITE)) 
+		{
+			return 1;
+		} else if (color.equals(Color.ORANGE)) 
+		{
+			return 2;
+		} else if (color.equals(Color.YELLOW)) 
+		{
+			return 3;
+		} else if (color.equals(Color.RED)) 
+		{
+			return 4;
+		} else if (color.equals(Color.BLUE)) 
+		{
+			return 5;
+		}	
+		return -1;
 	}
 	
 	/**
@@ -106,8 +132,8 @@ public class Cube
 		int myNum;
 		for (int i = 0; i < 100; i++) 
 		{
-			myNum = myRand.nextInt(6);
-			turn(myNum);
+			myNum = myRand.nextInt(5);
+			turn(myNum, false);
 		}
 	}
 	
@@ -115,21 +141,48 @@ public class Cube
 	 * Perform a random turn based on the randomize value.
 	 * @param face - Turn to be performed.
 	 */
-	private void turn(int face)
+	public void turn(int face, boolean inverse)
 	{
 		switch (face) {
-        case 1:  face = 0;
-                 turnTop();
-        case 2:  face = 1;
-        		 turnFront();
-        case 3:  face = 2;
-                 turnRight();
-        case 4:  face = 3;
-                 turnLeft();
-        case 5:  face = 4;
-                 turnBottom();
-        case 6:  face = 5;
-                 turnBack();
+        case 0:  if(inverse) {
+                 	turnTopInverse();
+        		 } else {
+        			 turnTop();
+        		 }
+        		 break;
+        case 1:  if(inverse) {
+            	 	turnFrontInverse();
+		   		 } else {
+		   			 turnFront();
+		   		 }
+   		 		 break;
+        case 2:  if(inverse) {
+        		 	turnRightInverse();
+        		 } else {
+        			 turnRight();
+        		 }
+        		 break;
+        case 3:  if(inverse)
+        		 {
+        		 	turnBackInverse();
+        		 } else {
+        			 turnBack();
+        		 }
+                 break;
+        case 4:  if(inverse)
+				 {
+				 	turnLeftInverse();
+				 } else {
+					 turnLeft();
+				 }
+        		 break;
+        case 5:  if(inverse)
+				 {
+				 	turnBottomInverse();
+				 } else {
+					 turnBottom();
+				 }
+        		 break;
 		}
 	}
 	
@@ -160,13 +213,13 @@ public class Cube
 	 */
 	public void turnRight()
 	{
-		turnFace(3);
+		turnFace(2);
 				
-		Color[] myTemps = {myFaces[2][0][0], myFaces[2][1][0], myFaces[2][2][0]};
+		Color[] myTemps = {myFaces[3][0][0], myFaces[3][1][0], myFaces[3][2][0]};
 		
-		myFaces[2][0][0] = myFaces[0][2][2];
-		myFaces[2][1][0] = myFaces[0][1][2];
-		myFaces[2][2][0] = myFaces[0][0][2];
+		myFaces[3][0][0] = myFaces[0][2][2];
+		myFaces[3][1][0] = myFaces[0][1][2];
+		myFaces[3][2][0] = myFaces[0][0][2];
 		
 		myFaces[0][2][2] = myFaces[1][2][2];
 		myFaces[0][1][2] = myFaces[1][1][2];
@@ -204,13 +257,13 @@ public class Cube
 		myFaces[1][1][0] = myFaces[0][1][0];
 		myFaces[1][2][0] = myFaces[0][2][0];
 		
-		myFaces[0][0][0] = myFaces[2][2][2];
-		myFaces[0][1][0] = myFaces[2][1][2];
-		myFaces[0][2][0] = myFaces[2][0][2];
+		myFaces[0][0][0] = myFaces[3][2][2];
+		myFaces[0][1][0] = myFaces[3][1][2];
+		myFaces[0][2][0] = myFaces[3][0][2];
 		
-		myFaces[2][2][2] = myFaces[5][0][0];
-		myFaces[2][1][2] = myFaces[5][1][0];
-		myFaces[2][0][2] = myFaces[5][2][0];
+		myFaces[3][2][2] = myFaces[5][0][0];
+		myFaces[3][1][2] = myFaces[5][1][0];
+		myFaces[3][0][2] = myFaces[5][2][0];
 		
 		myFaces[5][0][0] = myTemps[0];
 		myFaces[5][1][0] = myTemps[1];
@@ -234,11 +287,11 @@ public class Cube
 	{
 		turnFace(1);
 		
-		Color[] myTemps = {myFaces[3][0][0], myFaces[3][1][0], myFaces[3][2][0]};
+		Color[] myTemps = {myFaces[2][0][0], myFaces[2][1][0], myFaces[2][2][0]};
 		
-		myFaces[3][0][0] = myFaces[0][2][0];
-		myFaces[3][1][0] = myFaces[0][2][1];
-		myFaces[3][2][0] = myFaces[0][2][2];
+		myFaces[2][0][0] = myFaces[0][2][0];
+		myFaces[2][1][0] = myFaces[0][2][1];
+		myFaces[2][2][0] = myFaces[0][2][2];
 		
 		myFaces[0][2][0] = myFaces[4][2][2];
 		myFaces[0][2][1] = myFaces[4][1][2];
@@ -272,17 +325,17 @@ public class Cube
 		
 		Color[] myTemps = {myFaces[1][0][0], myFaces[1][0][1], myFaces[1][0][2]};
 		
-		myFaces[1][0][0] = myFaces[3][0][0];
-		myFaces[1][0][1] = myFaces[3][0][1];
-		myFaces[1][0][2] = myFaces[3][0][2];
+		myFaces[1][0][0] = myFaces[2][0][0];
+		myFaces[1][0][1] = myFaces[2][0][1];
+		myFaces[1][0][2] = myFaces[2][0][2];
 		
-		myFaces[3][0][0] = myFaces[2][0][0];
-		myFaces[3][0][1] = myFaces[2][0][1];
-		myFaces[3][0][2] = myFaces[2][0][2];
+		myFaces[2][0][0] = myFaces[3][0][0];
+		myFaces[2][0][1] = myFaces[3][0][1];
+		myFaces[2][0][2] = myFaces[3][0][2];
 		
-		myFaces[2][0][0] = myFaces[4][0][0];
-		myFaces[2][0][1] = myFaces[4][0][1];
-		myFaces[2][0][2] = myFaces[4][0][2];
+		myFaces[3][0][0] = myFaces[4][0][0];
+		myFaces[3][0][1] = myFaces[4][0][1];
+		myFaces[3][0][2] = myFaces[4][0][2];
 		
 		myFaces[4][0][0] = myTemps[0];
 		myFaces[4][0][1] = myTemps[1];
@@ -304,13 +357,13 @@ public class Cube
 	 */
 	public void turnBack()
 	{
-		turnFace(2);
+		turnFace(3);
 		
-		Color[] myTemps = {myFaces[3][0][2], myFaces[3][1][2], myFaces[3][2][2]};
+		Color[] myTemps = {myFaces[2][0][2], myFaces[2][1][2], myFaces[2][2][2]};
 		
-		myFaces[3][0][2] = myFaces[0][0][0];
-		myFaces[3][1][2] = myFaces[0][0][1];
-		myFaces[3][2][2] = myFaces[0][0][2];
+		myFaces[2][0][2] = myFaces[0][0][0];
+		myFaces[2][1][2] = myFaces[0][0][1];
+		myFaces[2][2][2] = myFaces[0][0][2];
 		
 		myFaces[0][0][0] = myFaces[4][2][0];
 		myFaces[0][0][1] = myFaces[4][1][0];
@@ -344,17 +397,17 @@ public class Cube
 		
 		Color[] myTemps = {myFaces[1][2][0], myFaces[1][2][1], myFaces[1][2][2]};
 		
-		myFaces[1][2][0] = myFaces[3][2][0];
-		myFaces[1][2][1] = myFaces[3][2][1];
-		myFaces[1][2][2] = myFaces[3][2][2];
+		myFaces[1][2][0] = myFaces[2][2][0];
+		myFaces[1][2][1] = myFaces[2][2][1];
+		myFaces[1][2][2] = myFaces[2][2][2];
 		
-		myFaces[3][2][0] = myFaces[2][2][0];
-		myFaces[3][2][1] = myFaces[2][2][1];
-		myFaces[3][2][2] = myFaces[2][2][2];
+		myFaces[2][2][0] = myFaces[3][2][0];
+		myFaces[2][2][1] = myFaces[3][2][1];
+		myFaces[2][2][2] = myFaces[3][2][2];
 		
-		myFaces[2][2][0] = myFaces[4][2][0];
-		myFaces[2][2][1] = myFaces[4][2][1];
-		myFaces[2][2][2] = myFaces[4][2][2];
+		myFaces[3][2][0] = myFaces[4][2][0];
+		myFaces[3][2][1] = myFaces[4][2][1];
+		myFaces[3][2][2] = myFaces[4][2][2];
 		
 		myFaces[4][2][0] = myTemps[0];
 		myFaces[4][2][1] = myTemps[1];
