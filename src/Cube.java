@@ -130,7 +130,7 @@ public class Cube
 	{
 		Random myRand = new Random();
 		int myNum;
-		for (int i = 0; i < 100; i++) 
+		for (int i = 0; i < 100000; i++) 
 		{
 			myNum = myRand.nextInt(5);
 			turn(myNum, false);
@@ -191,10 +191,10 @@ public class Cube
 	 * 
 	 * @param face - Index of the specific face to be turned.
 	 */
-	private void turnFace(int face)
+	private void turnFace(int face) 
 	{
+
 		Color temp;
-		
 		temp = myFaces[face][0][0];
 		myFaces[face][0][0] = myFaces[face][2][0];
 		myFaces[face][2][0] = myFaces[face][2][2];
@@ -359,23 +359,23 @@ public class Cube
 	{
 		turnFace(3);
 		
-		Color[] myTemps = {myFaces[2][0][2], myFaces[2][1][2], myFaces[2][2][2]};
+		Color[] myTemps = {myFaces[0][0][2], myFaces[0][0][1], myFaces[0][0][0]};
 		
-		myFaces[2][0][2] = myFaces[0][0][0];
-		myFaces[2][1][2] = myFaces[0][0][1];
-		myFaces[2][2][2] = myFaces[0][0][2];
+		myFaces[0][0][2] = myFaces[2][2][2];
+		myFaces[0][0][1] = myFaces[2][1][2];
+		myFaces[0][0][0] = myFaces[2][0][2];
 		
-		myFaces[0][0][0] = myFaces[4][2][0];
-		myFaces[0][0][1] = myFaces[4][1][0];
-		myFaces[0][0][2] = myFaces[4][0][0];
+		myFaces[2][2][2] = myFaces[5][2][0];
+		myFaces[2][1][2] = myFaces[5][2][1];
+		myFaces[2][0][2] = myFaces[5][2][2];
 		
-		myFaces[4][2][0] = myFaces[5][2][2];
-		myFaces[4][1][0] = myFaces[5][2][1];
-		myFaces[4][0][0] = myFaces[5][2][0];
+		myFaces[5][2][0] = myFaces[4][0][0];
+		myFaces[5][2][1] = myFaces[4][1][0];
+		myFaces[5][2][2] = myFaces[4][2][0];
 		
-		myFaces[5][2][2] = myTemps[0];
-		myFaces[5][2][1] = myTemps[1];
-		myFaces[5][2][0] = myTemps[2];
+		myFaces[4][0][0] = myTemps[0];
+		myFaces[4][1][0] = myTemps[1];
+		myFaces[4][2][0] = myTemps[2];
 	}
 	
 	/**
@@ -397,21 +397,22 @@ public class Cube
 		
 		Color[] myTemps = {myFaces[1][2][0], myFaces[1][2][1], myFaces[1][2][2]};
 		
-		myFaces[1][2][0] = myFaces[2][2][0];
-		myFaces[1][2][1] = myFaces[2][2][1];
-		myFaces[1][2][2] = myFaces[2][2][2];
 		
-		myFaces[2][2][0] = myFaces[3][2][0];
-		myFaces[2][2][1] = myFaces[3][2][1];
-		myFaces[2][2][2] = myFaces[3][2][2];
+		myFaces[1][2][0] = myFaces[4][2][0];
+		myFaces[1][2][1] = myFaces[4][2][1];
+		myFaces[1][2][2] = myFaces[4][2][2];
 		
-		myFaces[3][2][0] = myFaces[4][2][0];
-		myFaces[3][2][1] = myFaces[4][2][1];
-		myFaces[3][2][2] = myFaces[4][2][2];
+		myFaces[4][2][0] = myFaces[3][2][0];
+		myFaces[4][2][1] = myFaces[3][2][1];
+		myFaces[4][2][2] = myFaces[3][2][2];
 		
-		myFaces[4][2][0] = myTemps[0];
-		myFaces[4][2][1] = myTemps[1];
-		myFaces[4][2][2] = myTemps[2];	
+		myFaces[3][2][0] = myFaces[2][2][0];
+		myFaces[3][2][1] = myFaces[2][2][1];
+		myFaces[3][2][2] = myFaces[2][2][2];
+		
+		myFaces[2][2][0] = myTemps[0];
+		myFaces[2][2][1] = myTemps[1];
+		myFaces[2][2][2] = myTemps[2];	
 	}
 	
 	/**

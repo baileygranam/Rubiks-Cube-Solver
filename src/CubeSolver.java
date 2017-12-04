@@ -4,6 +4,8 @@ public class CubeSolver
 {
 	private Cube myCube;
 	
+	private int count = 0;
+	
 	public CubeSolver(int version, Cube cube)
 	{
 		myCube = cube;
@@ -20,7 +22,10 @@ public class CubeSolver
 	
 	private void solveV1()
 	{
+		
+		
 	}
+
 	
 	private void solveV2()
 	{	
@@ -33,15 +38,33 @@ public class CubeSolver
 	
 	private void solveGreenCross()
 	{
-		findGreenEdge();
-	}
-	
-	private void findGreenEdge()
-	{
+		for(int face = 1; face < 6; face++)
+		{
+			int tempFace = face;
+			
+			if(face == 1)
+			{
+				if(myCube.myFaces[face][0][1].equals(Color.GREEN))
+				{
+					if(!(myCube.myFaces[0][2][1].equals(myCube.COLORS[face])))
+					{
+						int numOfTurns = myCube.getColorInt(myCube.myFaces[0][2][1]) - face;
+						tempFace = myCube.getColorInt(myCube.myFaces[0][2][1]);
 
+						for(int i = 0; i < numOfTurns; i++)
+						{
+							myCube.turn(0, true);
+						}
+					}
+					
+					myCube.turn(0, true);
+					myCube.turn(tempFace+1, true);
+					myCube.turn(tempFace, true);
+				}
+			}
+		}
 	}
 
-	
 	private void connectTheGreen()
 	{
 		
