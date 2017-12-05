@@ -18,6 +18,7 @@ public class Cube
 	public final Color[] COLORS = {Color.GREEN, Color.WHITE, Color.ORANGE, Color.YELLOW, Color.RED, Color.BLUE};
 	private final int[] COLOR_INDEX = {0, 1, 2, 3, 4, 5};
 	private final int CUBE_SIZE = 3;
+	public int numOfMoves = 0;
 	
 	/**
 	 * Class constructor for the Cube.
@@ -87,7 +88,9 @@ public class Cube
 	public void reset()
 	{
 		setFaces();
+		numOfMoves = 0;
 	}
+	
 	
 	/**
 	 * Method to solve the cube using algorithm #1.
@@ -135,6 +138,8 @@ public class Cube
 			myNum = myRand.nextInt(5);
 			turn(myNum, false);
 		}
+		
+		numOfMoves = 0;
 	}
 	
 	/**
@@ -143,6 +148,8 @@ public class Cube
 	 */
 	public void turn(int face, boolean inverse)
 	{
+		numOfMoves++;
+		
 		switch (face) {
         case 0:  if(inverse) {
                  	turnTopInverse();
