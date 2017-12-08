@@ -4,7 +4,9 @@ import java.lang.reflect.Method;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
  
 /**
@@ -29,13 +31,13 @@ public class GUI
 	 
 	private JPanel[]       myFaces;
 	
-	private JButton        myRandomizeButton, myResetButton, mySolveButton1, mySolveButton2;
+	private JButton        myRandomizeButton, myResetButton, mySolveButton1;
 	
 	private JLabel[][]     mySquares;
 	
 	private Controller     myController;
 	
-    private ButtonListener myResetListener, myRandomizeListener, mySolve1Listener, mySolve2Listener;
+    private ButtonListener myResetListener, myRandomizeListener, mySolve1Listener;
 
 	
 	/**
@@ -149,23 +151,19 @@ public class GUI
 		
 		myRandomizeButton = new JButton("Randomize");
 		myResetButton     = new JButton("Reset");
-		mySolveButton1    = new JButton("Solve V1");
-		mySolveButton2    = new JButton("Solve V2");
+		mySolveButton1    = new JButton("Solve");
 	
 		myRandomizeButton.addMouseListener(myRandomizeListener);
 		myResetButton.addMouseListener(myResetListener);
 		mySolveButton1.addMouseListener(mySolve1Listener);
-		mySolveButton2.addMouseListener(mySolve2Listener);
 		
 		myRandomizeButton.setSize(200,50);
 		myResetButton.setSize(200,50);
 		mySolveButton1.setSize(200,50);
-		mySolveButton2.setSize(200,50);
 		
 		myButtonsPanel.add(myRandomizeButton);
 		myButtonsPanel.add(myResetButton);
 		myButtonsPanel.add(mySolveButton1);
-		myButtonsPanel.add(mySolveButton2);
 		
 		myFrame.add(myButtonsPanel);
 	}
@@ -183,21 +181,19 @@ public class GUI
     public void associateListeners(Controller controller)
     {
         Class<? extends Controller> controllerClass;
-        Method randomizeCubeMethod, resetCubeMethod, solveCubeV1, solveCubeV2;
+        Method randomizeCubeMethod, resetCubeMethod, solveCube;
                
         controllerClass = controller.getClass();
         
         randomizeCubeMethod = null;
         resetCubeMethod = null;
-        solveCubeV1 = null;
-        solveCubeV2 = null;
+        solveCube = null;
         
         try
         {
         	randomizeCubeMethod = controllerClass.getMethod("randomizeCube",(Class<?>[])null);
         	resetCubeMethod = controllerClass.getMethod("resetCube",(Class<?>[])null);
-        	solveCubeV1 = controllerClass.getMethod("solveCubeV1",(Class<?>[])null);
-        	solveCubeV2 = controllerClass.getMethod("solveCubeV2",(Class<?>[])null);
+        	solveCube = controllerClass.getMethod("solveCube",(Class<?>[])null);
         }
         catch(NoSuchMethodException exception)
         {
@@ -216,10 +212,7 @@ public class GUI
         
         myRandomizeListener = new ButtonListener(controller, randomizeCubeMethod, null);
         myResetListener = new ButtonListener(controller, resetCubeMethod, null);
-        mySolve1Listener = new ButtonListener(controller, solveCubeV1, null);
-        mySolve2Listener = new ButtonListener(controller, solveCubeV2, null);
-
-
+        mySolve1Listener = new ButtonListener(controller, solveCube, null);
     }
 	
 	

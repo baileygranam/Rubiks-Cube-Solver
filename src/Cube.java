@@ -16,7 +16,6 @@ public class Cube
 	 */
 	public  Color[][][] myFaces = new Color[6][3][3];;
 	public final Color[] COLORS = {Color.GREEN, Color.WHITE, Color.ORANGE, Color.YELLOW, Color.RED, Color.BLUE};
-	private final int[] COLOR_INDEX = {0, 1, 2, 3, 4, 5};
 	private final int CUBE_SIZE = 3;
 	public int numOfMoves = 0;
 	
@@ -63,26 +62,6 @@ public class Cube
 	}
 	
 	/**
-	 * Method to print each face of the cube. Used for testing purposes.
-	 */
-	private void printFaces()
-	{
-		for(int i = 0; i < myFaces.length; i++)
-		{
-			System.out.println("FACE #" + i);
-			for(int j = 0; j < CUBE_SIZE; j++)
-			{
-				for(int k = 0; k < CUBE_SIZE; k++)
-				{
-					System.out.print(myFaces[i][j][k]);
-				}
-				System.out.println("\n");
-			}
-			System.out.println("\n");
-		}
-	}
-	
-	/**
 	 * Method to reset the cube to default solved.
 	 */
 	public void reset()
@@ -91,21 +70,12 @@ public class Cube
 		numOfMoves = 0;
 	}
 	
-	
 	/**
-	 * Method to solve the cube using algorithm #1.
+	 * Method to solve the cube using algorithm .
 	 */
-	public void solveV1()
+	public void solve()
 	{
-		new CubeSolver(1, this);
-	}
-	
-	/**
-	 * Method to solve the cube using algorithm #2.
-	 */
-	public void solveV2()
-	{
-		new CubeSolver(2, this);
+		new CubeSolver(this);
 	}
 	
 	/**
@@ -142,14 +112,28 @@ public class Cube
 		numOfMoves = 0;
 	}
 	
+	public double getPercentSolved() {
+		double total = 0;
+		double faceTotal = 0;
+		for (int face = 0; face < 6; face++) {
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					if (myFaces[face][i][j] == COLORS[face]) faceTotal++;
+				}
+			}
+			total += faceTotal;
+			faceTotal = 0;
+		}
+		return 100 * total / 54;
+	}
+	
 	/**
 	 * Perform a random turn based on the randomize value.
 	 * @param face - Turn to be performed.
 	 */
 	public void turn(int face, boolean inverse)
-	{
+	{	
 		numOfMoves++;
-		
 		switch (face) {
         case 0:  if(inverse) {
                  	turnTopInverse();

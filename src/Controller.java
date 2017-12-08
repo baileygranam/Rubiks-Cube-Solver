@@ -50,20 +50,11 @@ public class Controller
     }
     
     /**
-     * Method to solve the cube 1.
+     * Method to solve the cube .
      */
-    public void solveCubeV1()
+    public void solveCube()
     {
-    	myCube.solveV1();
-    	myGUI.refresh();
-    }
-    
-    /**
-     * Method to solve the cube 2.
-     */
-    public void solveCubeV2()
-    {
-    	myCube.solveV2();
+    	myCube.solve();
     	myGUI.refresh();
     }
 }
